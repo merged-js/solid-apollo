@@ -6,6 +6,11 @@
   "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
   "private": false,
+  "homepage": "https://github.com/merged-js/solid-apollo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merged-js/solid-apollo.git"
+  },
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -cw",
