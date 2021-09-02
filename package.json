@@ -1,0 +1,60 @@
+{
+  "name": "@merged/solid-apollo",
+  "version": "1.0.0",
+  "description": "Apollo client for solid",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "private": false,
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -cw",
+    "lint": "eslint --ext ts,tsx --max-warnings 0 --cache src"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/es/index.js"
+    }
+  },
+  "keywords": [
+    "apollo",
+    "graphql",
+    "solid"
+  ],
+  "author": "Torsten Blindert",
+  "license": "MIT",
+  "peerDependencies": {
+    "@apollo/client": "^3.2.0",
+    "solid-js": "^1.1.2"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.4.10",
+    "@grapes-agency/eslint-config": "^1.5.7",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "babel-preset-solid": "^1.1.2",
+    "graphql": "^15.5.2",
+    "rollup": "^2.56.3",
+    "rollup-plugin-delete": "^2.0.0",
+    "solid-js": "^1.1.2",
+    "typescript": "^4.4.2"
+  },
+  "prettier": "@grapes-agency/eslint-config/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@grapes-agency/eslint-config/rules/base",
+      "@grapes-agency/eslint-config/rules/prettier"
+    ],
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/consistent-type-assertions": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/consistent-type-imports": "warn"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {}
+}
