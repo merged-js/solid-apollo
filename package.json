@@ -15,12 +15,8 @@
     "build": "rollup -c",
     "watch": "rollup -cw",
     "lint": "eslint --ext ts,tsx --max-warnings 0 --cache src",
-    "release": "standard-version --no-verify --releaseCommitMessageFormat \"chore(release): Release v{{currentTag}} :rocket:\""
-  },
-  "standard-version": {
-    "scripts": {
-      "posttag": "git push --follow-tags --no-verify origin master"
-    }
+    "commit": "cz",
+    "semantic-release": "semantic-release"
   },
   "exports": {
     ".": {
@@ -36,20 +32,23 @@
   "author": "Torsten Blindert",
   "license": "MIT",
   "peerDependencies": {
-    "@apollo/client": "^3.2.0",
-    "solid-js": "^1.1.2"
+    "@apollo/client": "^3.4.0",
+    "solid-js": "^1.1.0"
   },
   "devDependencies": {
-    "@apollo/client": "^3.4.10",
-    "@grapes-agency/eslint-config": "^1.5.7",
+    "@apollo/client": "^3.4.16",
+    "@grapes-agency/eslint-config": "^1.6.2",
     "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-typescript": "^8.2.5",
-    "babel-preset-solid": "^1.1.2",
-    "graphql": "^15.5.2",
-    "rollup": "^2.56.3",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/git": "^10.0.0",
+    "babel-preset-solid": "^1.1.7",
+    "cz-conventional-changelog": "^3.3.0",
+    "graphql": "^15.6.1",
+    "rollup": "^2.58.0",
     "rollup-plugin-delete": "^2.0.0",
-    "solid-js": "^1.1.2",
-    "standard-version": "^9.3.1",
+    "semantic-release": "^18.0.0",
+    "solid-js": "^1.1.7",
     "typescript": "^4.4.2"
   },
   "prettier": "@grapes-agency/eslint-config/prettier",
@@ -67,5 +66,35 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json",
+            "package-lock.json"
+          ],
+          "message": "chore(release): 🚀 ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
   }
 }
