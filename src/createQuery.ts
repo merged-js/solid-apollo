@@ -5,9 +5,7 @@ import { createResource, onCleanup } from 'solid-js'
 
 import { useApollo } from './ApolloProvider'
 
-interface BaseOptions<TData, TVariables> extends Omit<WatchQueryOptions<TVariables, TData>, 'query'> {
-  suspend?: boolean
-}
+type BaseOptions<TData, TVariables> = Omit<WatchQueryOptions<TVariables, TData>, 'query'>
 
 type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
@@ -39,11 +37,6 @@ export const createQuery = <TData = any, TVariables = OperationVariables>(
           }
         },
       })
-
-      if (opts.suspend === false) {
-        resolved = true
-        resolve(undefined)
-      }
 
       onCleanup(() => {
         sub.unsubscribe()

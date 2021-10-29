@@ -5,9 +5,7 @@ import { createResource, onCleanup } from 'solid-js'
 
 import { useApollo } from './ApolloProvider'
 
-interface BaseOptions<TData, TVariables> extends Omit<SubscriptionOptions<TVariables, TData>, 'query'> {
-  suspend?: boolean
-}
+type BaseOptions<TData, TVariables> = Omit<SubscriptionOptions<TVariables, TData>, 'query'>
 
 type CreateSubscriptionOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
@@ -35,11 +33,6 @@ export const createSubscription = <TData = any, TVariables = OperationVariables>
           }
         },
       })
-
-      if (opts.suspend !== true) {
-        resolved = true
-        resolve(undefined)
-      }
 
       onCleanup(() => {
         sub.unsubscribe()

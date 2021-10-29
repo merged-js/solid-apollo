@@ -6,8 +6,7 @@ A apollo client for solid
 
 Usage is very similar to the original apollo react implementation
 
-by default `createQuery`, `createLazyQuery`, `createMutation` will trigger `<Suspense />`.
-This behaviour can be disabled by add `suspense: false` as option.
+`createQuery`, `createLazyQuery`, `createMutation` and `createSubscription` return a resource object.
 
 ### Adding the ApolloProvider
 

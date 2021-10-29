@@ -8,7 +8,6 @@ import { useApollo } from './ApolloProvider'
 
 interface BaseOptions<TData, TVariables, TContext> extends Omit<MutationOptions<TData, TVariables, TContext>, 'mutation'> {
   ignoreResults?: boolean
-  suspend?: boolean
 }
 
 type CreateMutationOptions<TData, TVariables, TContext> =
@@ -24,7 +23,7 @@ export const createMutation = <TData = any, TVariables = OperationVariables, TCo
   let rejectResultPromise: (error: GraphQLError) => void | null = null
 
   const [executionOptions, setExecutionOptions] = createSignal<false | MutationOptions<TData, TVariables, TContext>>(false)
-  const [resource, { mutate }] = createResource(executionOptions, async opts => {
+  const [resource] = createResource(executionOptions, async opts => {
     const { data, errors } = await apolloClient.mutate<TData, TVariables, TContext>(opts)
 
     if (errors) {
@@ -46,25 +45,12 @@ export const createMutation = <TData = any, TVariables = OperationVariables, TCo
   return [
     async (opts: BaseOptions<TData, TVariables, TContext> = {}) => {
       const mergedOptions = mergeOptions(opts, { mutation, ...(typeof options === 'function' ? untrack(options) : options) })
-      if (mergedOptions.suspend !== false) {
-        setExecutionOptions(mergedOptions)
-        return new Promise<TData>((resolve, reject) => {
-          resolveResultPromise = resolve
-          rejectResultPromise = reject
-        })
-      }
 
-      const { data, errors } = await apolloClient.mutate<TData, TVariables, TContext>(mergedOptions)
-
-      if (errors) {
-        throw errors[0]
-      }
-
-      if (!mergedOptions.ignoreResults) {
-        mutate(data as any)
-      }
-
-      return data
+      setExecutionOptions(mergedOptions)
+      return new Promise<TData>((resolve, reject) => {
+        resolveResultPromise = resolve
+        rejectResultPromise = reject
+      })
     },
     resource,
   ] as const
