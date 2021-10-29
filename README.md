@@ -2,6 +2,10 @@
 
 A apollo client for solid
 
+## Disclaimer
+
+This is still under heavy development and not really "final".
+
 ## Usage
 
 Usage is very similar to the original apollo react implementation
