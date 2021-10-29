@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/merged-js/solid-apollo/compare/v1.2.0...v1.3.0) (2021-10-29)
+
+
+### Features
+
+* Added disclaimer (and pushed version) ([1617d68](https://github.com/merged-js/solid-apollo/commit/1617d68d012218a1ae515ed5b60b88b1defbbbed))
+
 # [1.1.0](https://github.com/merged-js/solid-apollo/compare/v1.0.3...v1.1.0) (2021-10-29)
 
 
