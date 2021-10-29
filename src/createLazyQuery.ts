@@ -2,7 +2,7 @@ import { mergeOptions } from '@apollo/client/core'
 import type { QueryOptions, OperationVariables, ApolloError } from '@apollo/client/core'
 import type { DocumentNode } from 'graphql'
 import type { Accessor } from 'solid-js'
-import { untrack, createSignal, createResource } from 'solid-js'
+import { onCleanup, untrack, createSignal, createResource } from 'solid-js'
 
 import { useApollo } from './ApolloProvider'
 
@@ -22,47 +22,49 @@ export const createLazyQuery = <TData = any, TVariables = OperationVariables>(
   let resolveResultPromise: (data: TData) => void | null = null
   let rejectResultPromise: (error: ApolloError) => void | null = null
 
-  const [resource, { mutate }] = createResource(executionOptions, async opts => {
-    const { data, error } = await apolloClient.query<TData, TVariables>({ query, ...opts })
+  const [resource, { mutate }] = createResource<TData, BaseOptions<TData, TVariables>>(executionOptions, opts => {
+    const observable = apolloClient.watchQuery<TData, TVariables>({ query, ...opts })
 
-    if (error) {
-      if (rejectResultPromise) {
-        rejectResultPromise(error)
-        rejectResultPromise = null
-      }
-      throw error
-    }
+    let resolved = false
+    return new Promise(resolve => {
+      const sub = observable.subscribe({
+        error: error => {
+          throw error
+        },
+        next: ({ data, error }) => {
+          if (error) {
+            if (rejectResultPromise) {
+              rejectResultPromise(error)
+              rejectResultPromise = null
+            }
+            throw error
+          }
 
-    if (resolveResultPromise) {
-      resolveResultPromise(data)
-      resolveResultPromise = null
-    }
+          if (!resolved) {
+            resolved = true
+            if (resolveResultPromise) {
+              resolveResultPromise(data)
+              resolveResultPromise = null
+            }
+            resolve(data)
+          } else {
+            mutate(data as any)
+          }
+        },
+      })
 
-    return data
+      onCleanup(() => sub.unsubscribe())
+    })
   })
 
   return [
     async (opts: BaseOptions<TData, TVariables> = {}) => {
       const mergedOptions = mergeOptions(opts, { query, ...(typeof options === 'function' ? untrack(options) : options) })
-      if (mergedOptions.suspend !== false) {
-        setExecutionOptions(mergedOptions)
-        return new Promise<TData>((resolve, reject) => {
-          resolveResultPromise = resolve
-          rejectResultPromise = reject
-        })
-      }
-
-      const { data, errors } = await apolloClient.query<TData, TVariables>(mergedOptions)
-
-      if (errors) {
-        throw errors[0]
-      }
-
-      if (!mergedOptions.ignoreResults) {
-        mutate(data as any)
-      }
-
-      return data
+      setExecutionOptions(mergedOptions)
+      return new Promise<TData>((resolve, reject) => {
+        resolveResultPromise = resolve
+        rejectResultPromise = reject
+      })
     },
     resource,
   ] as const
