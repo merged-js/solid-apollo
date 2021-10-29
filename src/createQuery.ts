@@ -9,7 +9,7 @@ type BaseOptions<TData, TVariables> = Omit<WatchQueryOptions<TVariables, TData>,
 
 type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
-export const createQuery = <TData = any, TVariables = OperationVariables>(
+export const createQuery = <TData = string, TVariables = OperationVariables>(
   query: DocumentNode,
   options: CreateQueryOptions<TData, TVariables> = {}
 ) => {
@@ -33,7 +33,7 @@ export const createQuery = <TData = any, TVariables = OperationVariables>(
             resolved = true
             resolve(data)
           } else {
-            mutate(data as any)
+            mutate(() => data)
           }
         },
       })

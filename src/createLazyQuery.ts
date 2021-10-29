@@ -19,8 +19,8 @@ export const createLazyQuery = <TData = any, TVariables = OperationVariables>(
 ) => {
   const apolloClient = useApollo()
   const [executionOptions, setExecutionOptions] = createSignal<false | QueryOptions<TVariables, TData>>(false)
-  let resolveResultPromise: (data: TData) => void | null = null
-  let rejectResultPromise: (error: ApolloError) => void | null = null
+  let resolveResultPromise: ((data: TData) => void) | null = null
+  let rejectResultPromise: ((error: ApolloError) => void) | null = null
 
   const [resource, { mutate }] = createResource<TData, BaseOptions<TData, TVariables>>(executionOptions, opts => {
     const observable = apolloClient.watchQuery<TData, TVariables>({ query, ...opts })
@@ -48,7 +48,7 @@ export const createLazyQuery = <TData = any, TVariables = OperationVariables>(
             }
             resolve(data)
           } else {
-            mutate(data as any)
+            mutate(() => data)
           }
         },
       })

@@ -19,8 +19,8 @@ export const createMutation = <TData = any, TVariables = OperationVariables, TCo
   options: CreateMutationOptions<TData, TVariables, TContext>
 ) => {
   const apolloClient = useApollo()
-  let resolveResultPromise: (data: TData) => void | null = null
-  let rejectResultPromise: (error: GraphQLError) => void | null = null
+  let resolveResultPromise: ((data: TData) => void) | null = null
+  let rejectResultPromise: ((error: GraphQLError) => void) | null = null
 
   const [executionOptions, setExecutionOptions] = createSignal<false | MutationOptions<TData, TVariables, TContext>>(false)
   const [resource] = createResource(executionOptions, async opts => {
@@ -35,7 +35,7 @@ export const createMutation = <TData = any, TVariables = OperationVariables, TCo
     }
 
     if (resolveResultPromise) {
-      resolveResultPromise(data)
+      resolveResultPromise(data!)
       resolveResultPromise = null
     }
 

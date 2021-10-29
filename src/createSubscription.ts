@@ -27,9 +27,9 @@ export const createSubscription = <TData = any, TVariables = OperationVariables>
         next: ({ data }) => {
           if (!resolved) {
             resolved = true
-            resolve(data)
+            resolve(data!)
           } else {
-            mutate(data as any)
+            mutate(() => data!)
           }
         },
       })
