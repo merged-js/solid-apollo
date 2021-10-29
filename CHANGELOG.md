@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/merged-js/solid-apollo/compare/v1.0.3...v1.1.0) (2021-10-29)
+
+
+### Bug Fixes
+
+* remove misleading "suspend" options ([17b329b](https://github.com/merged-js/solid-apollo/commit/17b329bb9a3820b459c62d325b093f0ee9097f48))
+
+
+### Features
+
+* check for correct <ApolloProvider /> setup ([2f9eb47](https://github.com/merged-js/solid-apollo/commit/2f9eb47afd9c07ef9d1697df62a35ac678960b6c))
+* make createLazyQuery a live query ([4dbb499](https://github.com/merged-js/solid-apollo/commit/4dbb499c743899ac05878fc757530cafed9c2575))
+
 ## [1.0.3](https://github.com/merged-js/solid-apollo/compare/v1.0.2...v1.0.3) (2021-10-29)
 
 
