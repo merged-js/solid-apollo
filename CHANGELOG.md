@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/merged-js/solid-apollo/compare/v1.3.0...v1.3.1) (2021-10-29)
+
+
+### Bug Fixes
+
+* use strict mode to generate correct typings ([a49cf8b](https://github.com/merged-js/solid-apollo/commit/a49cf8b89dc25268bbdce3d9bf29e5584ce58a32))
+
 # [1.3.0](https://github.com/merged-js/solid-apollo/compare/v1.2.0...v1.3.0) (2021-10-29)
 
 
