@@ -3,6 +3,7 @@ import type { QueryOptions, OperationVariables, ApolloError } from '@apollo/clie
 import type { DocumentNode } from 'graphql'
 import type { Accessor } from 'solid-js'
 import { onCleanup, untrack, createSignal, createResource } from 'solid-js'
+import { createStore, reconcile } from 'solid-js/store'
 
 import { useApollo } from './ApolloProvider'
 
@@ -13,7 +14,7 @@ interface BaseOptions<TData, TVariables> extends Omit<QueryOptions<TVariables, T
 
 type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
-export const createLazyQuery = <TData = any, TVariables = OperationVariables>(
+export const createLazyQuery = <TData = {}, TVariables = OperationVariables>(
   query: DocumentNode,
   options: CreateQueryOptions<TData, TVariables> = {}
 ) => {
@@ -22,8 +23,9 @@ export const createLazyQuery = <TData = any, TVariables = OperationVariables>(
   let resolveResultPromise: ((data: TData) => void) | null = null
   let rejectResultPromise: ((error: ApolloError) => void) | null = null
 
-  const [resource, { mutate }] = createResource<TData, BaseOptions<TData, TVariables>>(executionOptions, opts => {
+  const [resource] = createResource<TData, BaseOptions<TData, TVariables>>(executionOptions, opts => {
     const observable = apolloClient.watchQuery<TData, TVariables>({ query, ...opts })
+    const [state, setState] = createStore<TData>({} as any)
 
     let resolved = false
     return new Promise(resolve => {
@@ -46,9 +48,10 @@ export const createLazyQuery = <TData = any, TVariables = OperationVariables>(
               resolveResultPromise(data)
               resolveResultPromise = null
             }
-            resolve(data)
+            setState(data)
+            resolve(state)
           } else {
-            mutate(() => data)
+            setState(reconcile(data))
           }
         },
       })

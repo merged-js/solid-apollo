@@ -61,7 +61,8 @@
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/consistent-type-assertions": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/consistent-type-imports": "warn"
+      "@typescript-eslint/consistent-type-imports": "warn",
+      "@typescript-eslint/no-shadow": "off"
     }
   },
   "publishConfig": {

@@ -2,6 +2,7 @@ import type { SubscriptionOptions, OperationVariables } from '@apollo/client/cor
 import type { DocumentNode } from 'graphql'
 import type { Accessor } from 'solid-js'
 import { createResource, onCleanup } from 'solid-js'
+import { createStore, reconcile } from 'solid-js/store'
 
 import { useApollo } from './ApolloProvider'
 
@@ -9,14 +10,15 @@ type BaseOptions<TData, TVariables> = Omit<SubscriptionOptions<TVariables, TData
 
 type CreateSubscriptionOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
-export const createSubscription = <TData = any, TVariables = OperationVariables>(
+export const createSubscription = <TData = {}, TVariables = OperationVariables>(
   subscription: DocumentNode,
   options: CreateSubscriptionOptions<TData, TVariables> = {}
 ) => {
   const apolloClient = useApollo()
 
-  const [resource, { mutate }] = createResource<TData, BaseOptions<TData, TVariables>>(options, opts => {
+  const [resource] = createResource<TData, BaseOptions<TData, TVariables>>(options, opts => {
     const observable = apolloClient.subscribe<TData, TVariables>({ query: subscription, ...opts })
+    const [state, setState] = createStore<TData>({} as any)
 
     let resolved = false
     return new Promise(resolve => {
@@ -27,9 +29,10 @@ export const createSubscription = <TData = any, TVariables = OperationVariables>
         next: ({ data }) => {
           if (!resolved) {
             resolved = true
-            resolve(data!)
+            setState(data!)
+            resolve(state)
           } else {
-            mutate(() => data!)
+            setState(reconcile(data!))
           }
         },
       })

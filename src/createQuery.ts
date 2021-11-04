@@ -2,6 +2,7 @@ import type { WatchQueryOptions, OperationVariables } from '@apollo/client/core'
 import type { DocumentNode } from 'graphql'
 import type { Accessor } from 'solid-js'
 import { createResource, onCleanup } from 'solid-js'
+import { createStore, reconcile } from 'solid-js/store'
 
 import { useApollo } from './ApolloProvider'
 
@@ -9,14 +10,15 @@ type BaseOptions<TData, TVariables> = Omit<WatchQueryOptions<TVariables, TData>,
 
 type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
-export const createQuery = <TData = string, TVariables = OperationVariables>(
+export const createQuery = <TData = {}, TVariables = OperationVariables>(
   query: DocumentNode,
   options: CreateQueryOptions<TData, TVariables> = {}
 ) => {
   const apolloClient = useApollo()
 
-  const [resource, { mutate }] = createResource<TData, BaseOptions<TData, TVariables>>(options, opts => {
+  const [resource] = createResource<TData, BaseOptions<TData, TVariables>>(options, opts => {
     const observable = apolloClient.watchQuery<TData, TVariables>({ query, ...opts })
+    const [state, setState] = createStore<TData>({} as any)
 
     let resolved = false
     return new Promise(resolve => {
@@ -31,16 +33,15 @@ export const createQuery = <TData = string, TVariables = OperationVariables>(
 
           if (!resolved) {
             resolved = true
-            resolve(data)
+            setState(data)
+            resolve(state)
           } else {
-            mutate(() => data)
+            setState(reconcile(data))
           }
         },
       })
 
-      onCleanup(() => {
-        sub.unsubscribe()
-      })
+      onCleanup(() => sub.unsubscribe())
     })
   })
 
