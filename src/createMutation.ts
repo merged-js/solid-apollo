@@ -16,7 +16,7 @@ type CreateMutationOptions<TData, TVariables, TContext> =
 
 export const createMutation = <TData = any, TVariables = OperationVariables, TContext = DefaultContext>(
   mutation: DocumentNode,
-  options: CreateMutationOptions<TData, TVariables, TContext>
+  options: CreateMutationOptions<TData, TVariables, TContext> = {}
 ) => {
   const apolloClient = useApollo()
   let resolveResultPromise: ((data: TData) => void) | null = null
