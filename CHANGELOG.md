@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/merged-js/solid-apollo/compare/v1.4.0...v1.4.1) (2021-11-05)
+
+
+### Bug Fixes
+
+* make 2nd argument of createMutation optional ([552069f](https://github.com/merged-js/solid-apollo/commit/552069f64000a87b44f397976a8ab3742e58127a))
+
 # [1.4.0](https://github.com/merged-js/solid-apollo/compare/v1.3.1...v1.4.0) (2021-11-04)
 
 
