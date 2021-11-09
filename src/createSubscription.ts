@@ -37,9 +37,7 @@ export const createSubscription = <TData = {}, TVariables = OperationVariables>(
         },
       })
 
-      onCleanup(() => {
-        sub.unsubscribe()
-      })
+      onCleanup(() => sub.unsubscribe())
     })
   })
 

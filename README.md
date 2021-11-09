@@ -116,9 +116,6 @@ export const App: Component = () => {
 
 `createSubscription` can be typed and configured like [useSubscription](https://www.apollographql.com/docs/react/api/react/hooks/#usesubscription)
 
-By default, `createSubscription` will not trigger `<Suspense />`. By providing `suspense: true` as option, `<Suspense />` will be active until
-the first subscription data arrives.
-
 ```tsx
 import { gql, createSubscription } from '@merged/solid-apollo'
 import type { Component } from 'solid-js'
