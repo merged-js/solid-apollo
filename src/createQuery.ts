@@ -6,7 +6,9 @@ import { createStore, reconcile } from 'solid-js/store'
 
 import { useApollo } from './ApolloProvider'
 
-type BaseOptions<TData, TVariables> = Omit<WatchQueryOptions<TVariables, TData>, 'query'>
+interface BaseOptions<TData, TVariables> extends Omit<WatchQueryOptions<TVariables, TData>, 'query'> {
+  skip?: boolean
+}
 
 type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
@@ -16,7 +18,24 @@ export const createQuery = <TData = {}, TVariables = OperationVariables>(
 ) => {
   const apolloClient = useApollo()
 
-  const [resource] = createResource<TData, BaseOptions<TData, TVariables>>(options, opts => {
+  const optionsAccessor = () => {
+    if (typeof options !== 'function') {
+      if (options.skip) {
+        console.warn(
+          'you passed options.skip to createQuery, but the options are not an acccessor.\nThis query will never execute!\n\nReplace your options with a function.'
+        )
+      }
+
+      return options
+    }
+    const opts = typeof options === 'function' ? options() : options
+    if (opts.skip) {
+      return false
+    }
+    return opts
+  }
+
+  const [resource] = createResource<TData, BaseOptions<TData, TVariables>>(optionsAccessor, opts => {
     const observable = apolloClient.watchQuery<TData, TVariables>({ query, ...opts })
     const [state, setState] = createStore<TData>({} as any)
 
