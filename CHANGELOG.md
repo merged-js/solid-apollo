@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/merged-js/solid-apollo/compare/v1.4.1...v1.5.0) (2021-11-19)
+
+
+### Features
+
+* added options.skip to createQuery ([12d68d0](https://github.com/merged-js/solid-apollo/commit/12d68d0c76a519abe6386b4169f5c08fad392f15))
+
 ## [1.4.1](https://github.com/merged-js/solid-apollo/compare/v1.4.0...v1.4.1) (2021-11-05)
 
 
