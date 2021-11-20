@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/merged-js/solid-apollo/compare/v1.5.0...v1.5.1) (2021-11-20)
+
+
+### Bug Fixes
+
+* throw on failed mutation ([a2bbeba](https://github.com/merged-js/solid-apollo/commit/a2bbebaf67c0c982c1413f070435320637a06424))
+
 # [1.5.0](https://github.com/merged-js/solid-apollo/compare/v1.4.1...v1.5.0) (2021-11-19)
 
 
