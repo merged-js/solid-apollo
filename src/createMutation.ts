@@ -1,5 +1,5 @@
 import { mergeOptions } from '@apollo/client/core'
-import type { DefaultContext, OperationVariables, MutationOptions } from '@apollo/client/core'
+import type { DefaultContext, OperationVariables, MutationOptions, FetchResult } from '@apollo/client/core'
 import type { DocumentNode, GraphQLError } from 'graphql'
 import type { Accessor } from 'solid-js'
 import { createResource, createSignal, untrack } from 'solid-js'
@@ -24,8 +24,17 @@ export const createMutation = <TData = any, TVariables = OperationVariables, TCo
 
   const [executionOptions, setExecutionOptions] = createSignal<false | MutationOptions<TData, TVariables, TContext>>(false)
   const [resource] = createResource(executionOptions, async opts => {
-    const { data, errors } = await apolloClient.mutate<TData, TVariables, TContext>(opts)
-
+    let result: FetchResult<TData>
+    try {
+      result = await apolloClient.mutate<TData, TVariables, TContext>(opts)
+    } catch (error) {
+      if (rejectResultPromise) {
+        rejectResultPromise(error as GraphQLError)
+        rejectResultPromise = null
+      }
+      throw error
+    }
+    const { data, errors } = result
     if (errors) {
       if (rejectResultPromise) {
         rejectResultPromise(errors[0])
