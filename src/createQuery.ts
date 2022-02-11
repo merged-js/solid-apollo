@@ -1,5 +1,5 @@
 import type { WatchQueryOptions, OperationVariables } from '@apollo/client/core'
-import type { DocumentNode } from 'graphql'
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core'
 import type { Accessor } from 'solid-js'
 import { createResource, onCleanup } from 'solid-js'
 import { createStore, reconcile } from 'solid-js/store'
@@ -13,7 +13,7 @@ interface BaseOptions<TData, TVariables> extends Omit<WatchQueryOptions<TVariabl
 type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
 export const createQuery = <TData = {}, TVariables = OperationVariables>(
-  query: DocumentNode,
+  query: DocumentNode<TData, TVariables>,
   options: CreateQueryOptions<TData, TVariables> = {}
 ) => {
   const apolloClient = useApollo()
