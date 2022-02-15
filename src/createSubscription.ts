@@ -1,5 +1,5 @@
 import type { SubscriptionOptions, OperationVariables } from '@apollo/client/core'
-import type { DocumentNode } from 'graphql'
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core'
 import type { Accessor } from 'solid-js'
 import { createResource, onCleanup } from 'solid-js'
 import { createStore, reconcile } from 'solid-js/store'
@@ -11,7 +11,7 @@ type BaseOptions<TData, TVariables> = Omit<SubscriptionOptions<TVariables, TData
 type CreateSubscriptionOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
 export const createSubscription = <TData = {}, TVariables = OperationVariables>(
-  subscription: DocumentNode,
+  subscription: DocumentNode<TData, TVariables>,
   options: CreateSubscriptionOptions<TData, TVariables> = {}
 ) => {
   const apolloClient = useApollo()

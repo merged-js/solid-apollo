@@ -1,6 +1,7 @@
 import { mergeOptions } from '@apollo/client/core'
 import type { DefaultContext, OperationVariables, MutationOptions, FetchResult } from '@apollo/client/core'
-import type { DocumentNode, GraphQLError } from 'graphql'
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core'
+import type { GraphQLError } from 'graphql'
 import type { Accessor } from 'solid-js'
 import { createResource, createSignal, untrack } from 'solid-js'
 
@@ -15,7 +16,7 @@ type CreateMutationOptions<TData, TVariables, TContext> =
   | Accessor<BaseOptions<TData, TVariables, TContext>>
 
 export const createMutation = <TData = any, TVariables = OperationVariables, TContext = DefaultContext>(
-  mutation: DocumentNode,
+  mutation: DocumentNode<TData, TVariables>,
   options: CreateMutationOptions<TData, TVariables, TContext> = {}
 ) => {
   const apolloClient = useApollo()
