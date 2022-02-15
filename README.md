@@ -75,7 +75,7 @@ const QUERY = gql`
 `
 
 export const App: Component = () => {
-  const [execute, data] = createQuery(QUERY)
+  const [execute, data] = createLazyQuery(QUERY)
   
   return (
     <>
