@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/merged-js/solid-apollo/compare/v1.5.1...v1.6.0) (2022-02-15)
+
+
+### Bug Fixes
+
+* typo in README ([16ea30d](https://github.com/merged-js/solid-apollo/commit/16ea30dd873c5be052cf7e30fbe95d0feb72621a))
+
+
+### Features
+
+* Enable compatibility with @graphql-codegen/typed-document-node ([6b5312d](https://github.com/merged-js/solid-apollo/commit/6b5312df216ea68b61bd394c9eadcd04c264cae0))
+
 ## [1.5.1](https://github.com/merged-js/solid-apollo/compare/v1.5.0...v1.5.1) (2021-11-20)
 
 
