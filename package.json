@@ -32,8 +32,8 @@
   "author": "Torsten Blindert",
   "license": "MIT",
   "peerDependencies": {
-    "@apollo/client": "3.6.6",
-    "solid-js": "1.4.4"
+    "@apollo/client": "^3.6.0",
+    "solid-js": "^1.4.0"
   },
   "devDependencies": {
     "@apollo/client": "3.6.6",
