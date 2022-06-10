@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/merged-js/solid-apollo/compare/v1.6.0...v1.7.0) (2022-06-10)
+
+
+### Features
+
+* Upgrade solidjs package & fix ApolloProvider types and mergeOptions ([a215d03](https://github.com/merged-js/solid-apollo/commit/a215d0324f20edbff7f0d6155e8e483e839e1152))
+
 # [1.6.0](https://github.com/merged-js/solid-apollo/compare/v1.5.1...v1.6.0) (2022-02-15)
 
 
