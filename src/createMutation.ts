@@ -54,7 +54,10 @@ export const createMutation = <TData = any, TVariables = OperationVariables, TCo
 
   return [
     async (opts: BaseOptions<TData, TVariables, TContext> = {}) => {
-      const mergedOptions = mergeOptions(opts, { mutation, ...(typeof options === 'function' ? untrack(options) : options) })
+      const mergedOptions = mergeOptions<MutationOptions<TData, TVariables, TContext>>(opts, {
+        mutation,
+        ...(typeof options === 'function' ? untrack(options) : options),
+      })
 
       setExecutionOptions(mergedOptions)
       return new Promise<TData>((resolve, reject) => {

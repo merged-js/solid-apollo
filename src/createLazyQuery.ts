@@ -62,7 +62,10 @@ export const createLazyQuery = <TData = {}, TVariables = OperationVariables>(
 
   return [
     async (opts: BaseOptions<TData, TVariables> = {}) => {
-      const mergedOptions = mergeOptions(opts, { query, ...(typeof options === 'function' ? untrack(options) : options) })
+      const mergedOptions = mergeOptions<QueryOptions<TVariables, TData>>(opts, {
+        query,
+        ...(typeof options === 'function' ? untrack(options) : options),
+      })
       setExecutionOptions(mergedOptions)
       return new Promise<TData>((resolve, reject) => {
         resolveResultPromise = resolve
