@@ -40,14 +40,12 @@ export const createQuery = <TData = {}, TVariables = OperationVariables>(
     const [state, setState] = createStore<TData>({} as any)
 
     let resolved = false
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const sub = observable.subscribe({
-        error: error => {
-          throw error
-        },
+        error: reject,
         next: ({ data, error }) => {
           if (error) {
-            throw error
+            reject(error)
           }
 
           if (!resolved) {
