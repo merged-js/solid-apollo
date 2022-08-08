@@ -4,7 +4,8 @@ A apollo client for solid
 
 ## Disclaimer
 
-This is still under heavy development and not really "final".
+This is a spare time project and I cannot guarantee that it is free of bugs.
+If you encouter any bugs, feel free to create an issue or (even better) a pull request.
 
 ## Usage
 
