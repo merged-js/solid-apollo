@@ -1,6 +1,6 @@
 {
   "name": "@merged/solid-apollo",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Apollo client for solid",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
@@ -75,7 +75,9 @@
     }
   },
   "release": {
-    "branches": ["main"],
+    "branches": [
+      "main"
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",

@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/merged-js/solid-apollo/compare/v1.7.0...v1.7.1) (2022-08-08)
+
+
+### Bug Fixes
+
+* correctly propagate errors ([#12](https://github.com/merged-js/solid-apollo/issues/12)) ([a5147d0](https://github.com/merged-js/solid-apollo/commit/a5147d0d4db80b7c67158f914a6a85d67626a746))
+
 # [1.7.0](https://github.com/merged-js/solid-apollo/compare/v1.6.0...v1.7.0) (2022-06-10)
 
 
