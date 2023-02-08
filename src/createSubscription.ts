@@ -10,7 +10,7 @@ type BaseOptions<TData, TVariables> = Omit<SubscriptionOptions<TVariables, TData
 
 type CreateSubscriptionOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
-export const createSubscription = <TData = {}, TVariables = OperationVariables>(
+export const createSubscription = <TData extends {} = {}, TVariables extends OperationVariables = OperationVariables>(
   subscription: DocumentNode<TData, TVariables>,
   options: CreateSubscriptionOptions<TData, TVariables> = {}
 ) => {

@@ -15,7 +15,11 @@ type CreateMutationOptions<TData, TVariables, TContext> =
   | BaseOptions<TData, TVariables, TContext>
   | Accessor<BaseOptions<TData, TVariables, TContext>>
 
-export const createMutation = <TData = any, TVariables = OperationVariables, TContext = DefaultContext>(
+export const createMutation = <
+  TData = any,
+  TVariables extends OperationVariables = OperationVariables,
+  TContext extends DefaultContext = DefaultContext
+>(
   mutation: DocumentNode<TData, TVariables>,
   options: CreateMutationOptions<TData, TVariables, TContext> = {}
 ) => {

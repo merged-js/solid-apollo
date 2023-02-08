@@ -6,13 +6,15 @@ import { createStore, reconcile } from 'solid-js/store'
 
 import { useApollo } from './ApolloProvider'
 
-interface BaseOptions<TData, TVariables> extends Omit<WatchQueryOptions<TVariables, TData>, 'query'> {
+interface BaseOptions<TData, TVariables extends OperationVariables> extends Omit<WatchQueryOptions<TVariables, TData>, 'query'> {
   skip?: boolean
 }
 
-type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
+type CreateQueryOptions<TData, TVariables extends OperationVariables> =
+  | BaseOptions<TData, TVariables>
+  | Accessor<BaseOptions<TData, TVariables>>
 
-export const createQuery = <TData = {}, TVariables = OperationVariables>(
+export const createQuery = <TData extends {} = {}, TVariables extends OperationVariables = OperationVariables>(
   query: DocumentNode<TData, TVariables>,
   options: CreateQueryOptions<TData, TVariables> = {}
 ) => {

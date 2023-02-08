@@ -14,7 +14,7 @@ interface BaseOptions<TData, TVariables> extends Omit<QueryOptions<TVariables, T
 
 type CreateQueryOptions<TData, TVariables> = BaseOptions<TData, TVariables> | Accessor<BaseOptions<TData, TVariables>>
 
-export const createLazyQuery = <TData = {}, TVariables = OperationVariables>(
+export const createLazyQuery = <TData extends {} = {}, TVariables extends OperationVariables = OperationVariables>(
   query: DocumentNode<TData, TVariables>,
   options: CreateQueryOptions<TData, TVariables> = {}
 ) => {
