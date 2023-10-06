@@ -21,7 +21,8 @@
   "exports": {
     ".": {
       "require": "./dist/cjs/index.js",
-      "default": "./dist/es/index.js"
+      "default": "./dist/es/index.js",
+      "types": "./dist/types/index.d.ts"
     }
   },
   "keywords": [
